@@ -13,6 +13,7 @@ func RunAPI() {
 	//listeners
 	r.GET("/auth/code", tasks.GetToken)
 	r.GET("/dashboard", tasks.GetItem)
+	r.GET("/items", tasks.GetItemsOnly)
 
 	//Puerto
 	r.Run( ":8080")
