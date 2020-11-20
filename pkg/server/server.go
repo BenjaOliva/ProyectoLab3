@@ -7,10 +7,14 @@ import (
 
 func RunAPI() {
 
+	//Se crea el servidor
 	r := gin.Default()
 
+	//listeners
 	r.GET("/auth/code", tasks.GetToken)
-	//r.GET("/dashboard", controller.GetDashboard)
+	r.GET("/dashboard", tasks.GetItem)
+
+	//Puerto
 	r.Run( ":8080")
 
 	 /*
