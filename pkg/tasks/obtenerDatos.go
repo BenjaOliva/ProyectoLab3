@@ -115,7 +115,7 @@ type NuestrosItems struct{
 
 //====================================================================================
 
-func GetItem(c *gin.Context) {
+func GetAll(c *gin.Context) {
 
 	// Creamos variable del tipo "Nuestros itemas" para almacenar los arrays de la informacion a mostrar en navegador, en formato JSON
 	var NuestrosItems NuestrosItems

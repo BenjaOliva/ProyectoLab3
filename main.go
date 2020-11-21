@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ProyectoLab3/pkg/server"
+	"github.com/ProyectoLab3-master/pkg/server"
 )
 
 func main() {

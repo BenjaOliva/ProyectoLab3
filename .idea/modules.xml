@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Go-meli-Project.iml" filepath="$PROJECT_DIR$/.idea/Go-meli-Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ProyectoLab3-master/.idea/Go-meli-Project.iml" filepath="$PROJECT_DIR$/../ProyectoLab3-master/.idea/Go-meli-Project.iml" />
     </modules>
   </component>
 </project>
