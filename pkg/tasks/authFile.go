@@ -10,7 +10,10 @@ import (
 )
 
 var code string
+
 var TokenR TokenResp
+
+var UserDatasaved UserData
 
 // TOKEN
 type Token struct {
@@ -30,10 +33,14 @@ type TokenResp struct {
 	Refresh_token string 	`json:"refresh_token"`
 }
 
+type UserData struct {
+	User_Nickname string    `json:"nickname"`
+}
+
 // FUNCIONES PARA INTERCAMBIAR EL CODE POR UN ACCESS TOKEN
 func GetToken(c *gin.Context) {
 	code = c.Query("code")
-	fmt.Println("code: " + code)
+	//fmt.Println("code: " + code)
 	TokenRequest(code, c)
 }
 
@@ -52,7 +59,7 @@ func TokenRequest(code string, c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(string(b))
+	//fmt.Println(string(b))
 
 	// Intercambiamos code por token
 	resp, err := http.Post("https://api.mercadolibre.com/oauth/token", "application/json; application/x-www-form-urlencoded", bytes.NewBuffer(b))
@@ -66,12 +73,42 @@ func TokenRequest(code string, c *gin.Context) {
 
 	data, err := ioutil.ReadAll(resp.Body)
 
-	bodyString := string(data)
-	fmt.Println(bodyString)
 
 	json.Unmarshal(data, &TokenR)
-	fmt.Printf("%+v\n", TokenR)
+	//fmt.Printf("%+v\n", TokenR)
 
-	c.JSON(200, TokenR)
+	//c.JSON(200, TokenR)
+
+	//Obtenemos los datos del usuario logueado - Codigo generado en Postman
+
+	url := "https://api.mercadolibre.com/users/me"
+	method := "GET"
+
+	client := &http.Client {
+	}
+	req, err := http.NewRequest(method, url, nil)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	req.Header.Add("Authorization", "Bearer "+TokenR.Access_token)
+
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// Datos de Usuario Logueado
+	//fmt.Println(string(body))
+
+	json.Unmarshal(body, &UserDatasaved)
+
 }
-
