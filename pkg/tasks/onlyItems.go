@@ -11,8 +11,8 @@ import (
 
 //====================================================================================
 
-type SoloItems struct{
-	ItemsObtenidos [] Item
+type SoloItems struct {
+	ItemsObtenidos []Item
 }
 
 func GetItemsOnly(c *gin.Context) {
@@ -22,7 +22,7 @@ func GetItemsOnly(c *gin.Context) {
 
 	//Consulta para obtener todos los ITEMS de un usuario, pasamos 2 parametros, id de usuario generado por la funcion GetToken
 	//y el parametro access token para validar y obtener los datos que solicitamos
-	resp1, err := http.Get("https://api.mercadolibre.com/users/"+ strconv.Itoa(TokenR.User_id) +"/items/search?access_token=" + TokenR.Access_token)
+	resp1, err := http.Get("https://api.mercadolibre.com/users/" + strconv.Itoa(TokenR.User_id) + "/items/search?access_token=" + TokenR.Access_token)
 
 	//Manejo de err
 	if err != nil {
@@ -38,13 +38,13 @@ func GetItemsOnly(c *gin.Context) {
 	json.Unmarshal(dataItemsId, &IdItemsVendedor)
 
 	//Array donde almacenamos los items convertidos
-	var items [] Item
+	var items []Item
 
 	for i := 0; i < len(IdItemsVendedor.Id); i++ {
 		//Get ´para obtener los datos de un item en concreto
 		resp2, err := http.Get("https://api.mercadolibre.com/items/" + IdItemsVendedor.Id[i] + "?access_token=" + TokenR.Access_token)
 		if err != nil {
-			fmt.Errorf("Error",err.Error())
+			fmt.Errorf("Error", err.Error())
 			return
 		}
 
@@ -71,7 +71,6 @@ func GetItemsOnly(c *gin.Context) {
 	//Guardamos nuestros items en la variable Principal para mostrar
 	OnlyItems.ItemsObtenidos = items
 
-	c.JSON(200, OnlyItems)
-
+	//c.JSON(200, OnlyItems)
 
 }
