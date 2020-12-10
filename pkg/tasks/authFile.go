@@ -17,24 +17,24 @@ var UserDatasaved UserData
 
 // TOKEN
 type Token struct {
-	Grant_type string 		`json:"grant_type"`
-	Client_id int 			`json:"client_id"`
-	Client_secret string 	`json:"client_secret"`
-	Code string				`json:"code"`
-	Redirect_uri string 	`json:"redirect_uri"`
+	Grant_type    string `json:"grant_type"`
+	Client_id     int    `json:"client_id"`
+	Client_secret string `json:"client_secret"`
+	Code          string `json:"code"`
+	Redirect_uri  string `json:"redirect_uri"`
 }
 
 type TokenResp struct {
-	Access_token string 	`json:"access_token"`
-	Token_type string 		`json:"token_type"`
-	Expires_in int 			`json:"expires_in"`
-	Scope string 			`json:"scope"`
-	User_id int 			`json:"user_id"`
-	Refresh_token string 	`json:"refresh_token"`
+	Access_token  string `json:"access_token"`
+	Token_type    string `json:"token_type"`
+	Expires_in    int    `json:"expires_in"`
+	Scope         string `json:"scope"`
+	User_id       int    `json:"user_id"`
+	Refresh_token string `json:"refresh_token"`
 }
 
 type UserData struct {
-	User_Nickname string    `json:"nickname"`
+	User_Nickname string `json:"nickname"`
 }
 
 // FUNCIONES PARA INTERCAMBIAR EL CODE POR UN ACCESS TOKEN
@@ -73,9 +73,8 @@ func TokenRequest(code string, c *gin.Context) {
 
 	data, err := ioutil.ReadAll(resp.Body)
 
-
 	json.Unmarshal(data, &TokenR)
-	//fmt.Printf("%+v\n", TokenR)
+	fmt.Printf("Access Token: " + TokenR.Access_token)
 
 	//c.JSON(200, TokenR)
 
@@ -84,8 +83,7 @@ func TokenRequest(code string, c *gin.Context) {
 	url := "https://api.mercadolibre.com/users/me"
 	method := "GET"
 
-	client := &http.Client {
-	}
+	client := &http.Client{}
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
