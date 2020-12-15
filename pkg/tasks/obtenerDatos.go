@@ -12,108 +12,118 @@ import (
 //========================= STRUCTS PARA ITEMNS ====================
 //Struct de imagenes para almacenar todas las imagenes del Item MeLi
 type PictureMeli struct {
-	Url string                 `json:"url"`
+	Url string `json:"url"`
 }
 
 // Item Generado desde MeLi
 type ItemMeli struct {
-	Id    string               `json:"id"`
-	Title string               `json:"title"`
-	Price float64              `json:"price"`
-	Available_quantity int     `json:"available_quantity"`
-	Pictures []PictureMeli	   `json:"pictures"`
-	Condition string           `json:"condition"`
-	Date string 			   `json:"date_created"`
+	Id                 string        `json:"id"`
+	Title              string        `json:"title"`
+	Price              float64       `json:"price"`
+	Available_quantity int           `json:"available_quantity"`
+	Pictures           []PictureMeli `json:"pictures"`
+	Condition          string        `json:"condition"`
+	Date               string        `json:"date_created"`
 }
 
 // --- STRUCT PRINCIPAL A MOSTRAR ---
 type Item struct {
-	Titulo string
-	Cantidad int
-	Precio float64
-	PrimeraImagen string
-	Condicion string
+	Titulo          string
+	Cantidad        int
+	Precio          float64
+	PrimeraImagen   string
+	Condicion       string
 	FechaDeCreacion string
 }
 
 //Struct para almacenar los ID de producto en un array de string
 type ItemsIdMeli struct {
-	Id []string              `json:"results"`
+	Id []string `json:"results"`
 }
+
 //===================================================================
 
 //========================= STRUCTS PARA PREGUNTAS SIN RESPONDER ====================
 
 // Struct con estructura para almacenar lo que recibimos de MeLi en crudo
 type QuestionMeli struct {
-	Date_created string   `json:"date_created"`
-	Text string           `json:"text"`
-	Status string         `json:"status"`
+	Date_created string       `json:"date_created"`
+	Text         string       `json:"text"`
+	Status       string       `json:"status"`
+	From         QuestionFrom `json:"from"`
 }
 
 //Array de las preguntas del tipo de estructura mencionada anteriormente
 type PreguntasSR struct {
-	Questions []QuestionMeli  `json:"questions"`
+	Questions []QuestionMeli `json:"questions"`
 }
 
 // --- STRUCT PRINCIPAL A MOSTRAR ---
 type Unanswered_Question struct {
 	Question_date string
-	Title string
+	Title         string
 	Question_text string
+	FromUser      string
 }
+
+type QuestionFrom struct {
+	id string
+}
+
 //====================================================================================
 
 //========================= STRUCTS PARA PRODUCTOS VENDIDOS ========================
 
 type SingleItemMeli struct {
-	Title string                `json:"title"`
+	Title string `json:"title"`
 }
 
 type Order_ItemsMeli struct {
-	SingleItem SingleItemMeli    `json:"item"`
-	Quantity int                 `json:"quantity"`
-	Unit_price float64           `json:"unit_price"`
-	Full_Unit_Price float64      `json:"full_unit_price"`
+	SingleItem      SingleItemMeli `json:"item"`
+	Quantity        int            `json:"quantity"`
+	Unit_price      float64        `json:"unit_price"`
+	Full_Unit_Price float64        `json:"full_unit_price"`
 }
 
 type ResultMeli struct {
-	Order_Items []Order_ItemsMeli `json:"order_items"`
-	Total_amount float64          `json:"total_amount"`
-	Paid_amount float64           `json:"paid_amount"`
-	Date_closed string            `json:"date_closed"`
+	Order_Items  []Order_ItemsMeli `json:"order_items"`
+	Total_amount float64           `json:"total_amount"`
+	Paid_amount  float64           `json:"paid_amount"`
+	Date_closed  string            `json:"date_closed"`
 }
 
 type Sold_Item struct {
-	Title string
+	Title         string
 	Sold_Quantity int
-	Unit_Price float64
-	Subtotal float64
+	Unit_Price    float64
+	Subtotal      float64
 }
 
 // --- STRUCT PRINCIPAL A MOSTRAR ---
 type Sale_Order struct {
-	Sold_Items [] Sold_Item
-	Sale_date string
-	Total  float64
+	Sold_Items     []Sold_Item
+	Sale_date      string
+	Total          float64
 	Total_Delivery float64
 }
 
 type SoldItemMeli struct {
-	Result []ResultMeli            `json:"results"`
+	Result []ResultMeli `json:"results"`
 }
+
 //====================================================================================
 
 //========================= STRUCT PARA MOSTRAR LOS ARRAYS DE STRUCTS PRINCIPALES ========================
 
-type NuestrosItems struct{
-	ItemsObtenidos [] Item
-	Unanswered_Questions [] Unanswered_Question
-	Sales_Orders [] Sale_Order
-
+type NuestrosItems struct {
+	ItemsObtenidos       []Item
+	Unanswered_Questions []Unanswered_Question
+	Sales_Orders         []Sale_Order
 }
 
 //====================================================================================
+
+var Questions []Unanswered_Question
 
 func GetAll(c *gin.Context) {
 
@@ -122,7 +132,7 @@ func GetAll(c *gin.Context) {
 
 	//Consulta para obtener todos los ITEMS de un usuario, pasamos 2 parametros, id de usuario generado por la funcion GetToken
 	//y el parametro access token para validar y obtener los datos que solicitamos
-	resp1, err := http.Get("https://api.mercadolibre.com/users/"+ strconv.Itoa(TokenR.User_id) +"/items/search?access_token=" + TokenR.Access_token)
+	resp1, err := http.Get("https://api.mercadolibre.com/users/" + strconv.Itoa(TokenR.User_id) + "/items/search?access_token=" + TokenR.Access_token)
 
 	//Manejo de err
 	if err != nil {
@@ -138,13 +148,13 @@ func GetAll(c *gin.Context) {
 	json.Unmarshal(dataItemsId, &IdItemsVendedor)
 
 	//Array donde almacenamos los items convertidos
-	var items [] Item
+	var items []Item
 
 	for i := 0; i < len(IdItemsVendedor.Id); i++ {
 		//Get ´para obtener los datos de un item en concreto
 		resp2, err := http.Get("https://api.mercadolibre.com/items/" + IdItemsVendedor.Id[i] + "?access_token=" + TokenR.Access_token)
 		if err != nil {
-			fmt.Errorf("Error",err.Error())
+			fmt.Errorf("Error", err.Error())
 			return
 		}
 
@@ -200,7 +210,7 @@ func GetAll(c *gin.Context) {
 			UnansweredQuestiontemp.Title = NuestrosItems.ItemsObtenidos[i].Titulo
 			UnansweredQuestiontemp.Question_date = questions.Questions[i].Date_created
 			UnansweredQuestiontemp.Question_text = questions.Questions[i].Text
-
+			UnansweredQuestiontemp.FromUser = questions.Questions[i].From.id
 			//Guardamos en array
 			Unanswered_Questions = append(Unanswered_Questions, UnansweredQuestiontemp)
 		}
@@ -209,7 +219,7 @@ func GetAll(c *gin.Context) {
 	NuestrosItems.Unanswered_Questions = Unanswered_Questions
 
 	//  Ventas efectuadas
-	resp2, err := http.Get("https://api.mercadolibre.com/orders/search?seller="+ strconv.Itoa(TokenR.User_id) +"&order.status=paid&access_token=" + TokenR.Access_token)
+	resp2, err := http.Get("https://api.mercadolibre.com/orders/search?seller=" + strconv.Itoa(TokenR.User_id) + "&order.status=paid&access_token=" + TokenR.Access_token)
 
 	defer resp2.Body.Close()
 
@@ -218,7 +228,7 @@ func GetAll(c *gin.Context) {
 	var soldItems SoldItemMeli
 	json.Unmarshal(dataSales, &soldItems)
 
-	var Sales_Orders [] Sale_Order
+	var Sales_Orders []Sale_Order
 
 	for i := 0; i < len(soldItems.Result); i++ {
 		var Sale_Order_Temp Sale_Order
@@ -239,7 +249,8 @@ func GetAll(c *gin.Context) {
 
 	NuestrosItems.Sales_Orders = Sales_Orders
 
-	c.JSON(200, NuestrosItems)
+	Questions = NuestrosItems.Unanswered_Questions
 
+	//c.JSON(200, NuestrosItems)
 
 }
