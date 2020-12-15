@@ -27,7 +27,7 @@ con el boton "Salir".
 #### Funciones del DASHBOARD:
 
 * **1.** Una vez en el dashboard podemos acceder a los links habilitados en la barra lateral izquierda como se ve en la siguiente imagen.
-![Alt text](pkg/server/templates/sidebar-readme.png "Opciones en Sidebar")
+![Alt text](pkg/assets/sidebar-readme.png "Opciones en Sidebar")
 * **2.** Las opciones que no estan habilitadas o desarrolladas, aparecen sin la posibilidad de ser utilizadas hasta que se complete su desarrollo, acompañado de un 
          estilo mas tenue para que el usuario entienda que la opcion no esta disponible.
 * **3.** Entre algunas de las opciones tenemos el apartado "Preguntas" donde se mostraran las consultas realizadas por otros usuarios en los productos publicados por el usuario logueado que aun no han sido respondidas (Aun en desarrollo)

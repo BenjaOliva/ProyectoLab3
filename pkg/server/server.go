@@ -12,9 +12,7 @@ func RunAPI() {
 	r := gin.Default()
 
 	//Cargamos los archivos que vamos a utilizar en la Plataforma
-	r.LoadHTMLFiles("pkg/server/templates/index.html",
-		"pkg/server/templates/signin.html",
-		"pkg/server/templates/items.html")
+	r.LoadHTMLGlob("pkg/server/templates/*")
 
 	//EndPoints
 	// - GetToken
