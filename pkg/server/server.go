@@ -73,6 +73,22 @@ func RunAPI() {
 			"signin.html",
 			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
 			gin.H{
+				"title":     tasks.TokenR.User_id,
+				"Productos": tasks.OnlyItems,
+			},
+		)
+	})
+
+	r.GET("/crear", tasks.NewProduct, func(c *gin.Context) {
+
+		// Call the HTML method of the Context to render a template
+		c.HTML(
+			// Set the HTTP status to 200 (OK)
+			http.StatusOK,
+			// Use the index.html template
+			"newProduct.html",
+			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
+			gin.H{
 				"title": tasks.TokenR.User_id,
 			},
 		)
