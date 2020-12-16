@@ -67,7 +67,7 @@ type Unanswered_Question struct {
 }
 
 type QuestionFrom struct {
-	id string
+	id string `json:"id"`
 }
 
 //====================================================================================
@@ -192,9 +192,11 @@ func GetAll(c *gin.Context) {
 			fmt.Errorf("Error", err.Error())
 			return
 		}
+
 		dataQuestions, err := ioutil.ReadAll(resp3.Body)
 
 		var questions PreguntasSR
+
 		json.Unmarshal(dataQuestions, &questions)
 
 		var UnansweredQuestiontemp Unanswered_Question
@@ -218,6 +220,7 @@ func GetAll(c *gin.Context) {
 
 	NuestrosItems.Unanswered_Questions = Unanswered_Questions
 
+	fmt.Println()
 	//  Ventas efectuadas
 	resp2, err := http.Get("https://api.mercadolibre.com/orders/search?seller=" + strconv.Itoa(TokenR.User_id) + "&order.status=paid&access_token=" + TokenR.Access_token)
 
