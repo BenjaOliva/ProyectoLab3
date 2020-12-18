@@ -16,16 +16,19 @@ func RunAPI() {
 
 	//EndPoints
 	// - GetToken
-	r.GET("/auth/code", tasks.GetToken, func(c *gin.Context) {
+	r.GET("/auth/code", tasks.GetToken, tasks.GetItemsOnly, tasks.GetAll, func(c *gin.Context) {
 		// Renderizamos el HTML cargado previamente
 		c.HTML(
 			// seteamos status HTTP en 200 (OK)
 			http.StatusOK,
 			// Usamos el template cargado
 			"index.html",
-			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
+			// Pasamos los datos que queramos al archivo index, por ejemplo "nickname" de Usuario en el titulo de pagina
 			gin.H{
-				"title": tasks.UserDatasaved.User_Nickname,
+				"title":            tasks.UserDatasaved.User_Nickname,
+				"itemCounter":      len(tasks.OnlyItems.ItemsObtenidos),
+				"PendingQuestions": len(tasks.NuestrosItems.Unanswered_Questions),
+				"soldItemsCounter": len(tasks.NuestrosItems.Sales_Orders),
 			},
 		)
 	})
@@ -89,7 +92,7 @@ func RunAPI() {
 			"newProduct.html",
 			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
 			gin.H{
-				"title": tasks.TokenR.User_id,
+				"title": tasks.UserDatasaved.User_Nickname,
 			},
 		)
 	})

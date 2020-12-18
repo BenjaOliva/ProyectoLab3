@@ -73,10 +73,18 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8080/items">
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Productos</span></a>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="http://localhost:8080/items">Publicaciones</a>
+                        <a class="collapse-item" href="http://localhost:8080/crear"> Crear Publicacion</a>
+
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -194,51 +202,121 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Mis Productos</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Nuevos productos</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
                                     class="fas fa-download fa-sm text-white-50"></i> Descargar</a>
                     </div>
                     <hr>
                     <!-- Content Row -->
                     <div class="row">
-
-                        <div id="Items"></div>
-
-                        <script>
-
-                            var cadena = {{ .Productos }}
-
-                                cadena = cadena["ItemsObtenidos"]
-
-                            if(cadena.length > 0){
-                                for(let i = 0; i < cadena.length; i++){
-                                    console.log(cadena[i])
-
-                                    let div = document.getElementById("Items");
-                                    div.innerHTML += "<div class='card text-white bg-dark flex-row flex-wrap '>"
-                                        +  "<div class='card-header border-0 bg-dark '><br>"
-                                        +  "    <img src="+cadena[i].PrimeraImagen+" width='200px' />"
-                                        +  "</div>"
-                                        +  "<div class='card-block px-5'>"
-                                        +  "<br>"
-                                        +  "<h4 class='card-title'>"+cadena[i].Titulo+"</h4><hr style='height:2px;border-width:0;color:gray;background-color:gray'>"
-                                        +  "<p class='card-text'>Precio: $"+cadena[i].Precio+"</p>"
-                                        +  "<p class='card-text'>Cantidad: "+cadena[i].Cantidad+"</p>"
-                                        +  "<p class='card-text'>Condicion: "+cadena[i].Condicion+"</p>"
-                                        +  "<a href='#' class='btn btn-success'>Guardar</a>"
-                                        +  "</div>"
-                                        +  "<div class='w-100'><br></div>"
-                                        +  "<div class='card-footer w-100 bg-dark'>"
-                                        +  "Fecha de Publicacion: "+ cadena[i].FechaDeCreacion +" "
-                                        +  "</div>"
-                                        +  "</div><br>";
-
-
-                                }
-                            }else{
-                                console.log("No hay items!")
+                        <style>
+                            body {
+                                margin:0px;
+                                height:100vh;
+                                background:#333;
+                            }
+                            .center {
+                                height:100%;
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                            }
+                            .form-input {
+                                width:250px;
+                                padding:20px;
+                                background:#fff;
+                                border:2px dashed #555;
+                            }
+                            .form-input input {
+                                display:none;
+                            }
+                            .form-input label {
+                                display:block;
+                                width:100%;
+                                height:50px;
+                                line-height:50px;
+                                text-align:center;
+                                background:#333;
+                                color:#fff;
+                                font-size:15px;
+                                font-family:"Open Sans",sans-serif;
+                                text-transform:Uppercase;
+                                font-weight:600;
+                                border-radius:10px;
+                                cursor:pointer;
                             }
 
+                            .form-input img {
+                                width:100%;
+                                display:none;
+                                margin-top:10px;
+                            }
+                        </style>
+                        <div id="Items">
+
+                            <div class='card text-white bg-dark flex-row flex-wrap '>
+                                <div class='card-header border-0 bg-dark '>
+                                    <div class="center">
+                                        <div class="form-input">
+                                            <label for="file-ip-1">Cargar Imagen</label>
+                                            <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+                                            <div class="preview">
+                                                <img id="file-ip-1-preview">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='card-block px-5'>
+                                    <br>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon">Titulo</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Titulo de la Publicacion..." aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Precio </span>
+                                            <span class="input-group-text" id="basic-addon2">$ </span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="Precio de Producto..." aria-label="Username" aria-describedby="basic-addon1" value="0.00">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon3">Cantidad</span>
+                                        </div>
+                                        <input type="number" class="form-control" aria-label="Username" aria-describedby="basic-addon1" value="1">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon4">Condicion</span>
+                                        </div>
+                                        <select class="custom-select" id="inputGroupSelect01">
+                                            <option selected disabled>Estado...</option>
+                                            <option value="new">Nuevo</option>
+                                            <option value="used-new">Usado - Como Nuevo</option>
+                                            <option value="used">Usado - En buen Estado</option>
+                                        </select>
+                                    </div>
+                                    <a href='#' class='btn btn-success'>Publicar</a>
+                                </div>
+                                <div class='w-100'><br></div>
+                                <div class='card-footer w-100 bg-dark'>
+                                    <b>Todos los campos son obligatorios para publicar su producto</b>
+                                </div>
+                            </div><br>"
+
+
+                        </div>
+                        <script>
+                            function showPreview(event){
+                                if(event.target.files.length > 0){
+                                    var src = URL.createObjectURL(event.target.files[0]);
+                                    var preview = document.getElementById("file-ip-1-preview");
+                                    preview.src = src;
+                                    preview.style.display = "block";
+                                }
+                            }
                         </script>
                     </div>
 
