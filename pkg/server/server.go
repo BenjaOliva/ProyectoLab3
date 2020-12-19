@@ -1,11 +1,9 @@
 package server
 
 import (
-	"database/sql"
 	"github.com/ProyectoLab3-master/pkg/tasks"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"log"
 	"net/http"
 )
 
@@ -106,7 +104,7 @@ func RunAPI() {
 			"saveOnDB.html",
 			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
 			gin.H{
-				"title": tasks.TokenR.User_id,
+				"title": tasks.UserDatasaved.User_Nickname,
 				"Item":  tasks.ItemCaptured,
 			},
 		)
@@ -115,12 +113,4 @@ func RunAPI() {
 	//Corremos el server en el puerto deseado
 	r.Run(":8080")
 
-}
-
-func Init() {
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:8080)/DB")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
 }
