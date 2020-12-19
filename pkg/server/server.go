@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/ProyectoLab3-master/pkg/tasks"
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 	"net/http"
 )
 
@@ -90,6 +91,21 @@ func RunAPI() {
 			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
 			gin.H{
 				"title": tasks.TokenR.User_id,
+			},
+		)
+	})
+
+	r.GET("/guardar", tasks.SaveItem, func(c *gin.Context) {
+		// Call the HTML method of the Context to render a template
+		c.HTML(
+			// Set the HTTP status to 200 (OK)
+			http.StatusOK,
+			// Use the index.html template
+			"saveOnDB.html",
+			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
+			gin.H{
+				"title": tasks.UserDatasaved.User_Nickname,
+				"Item":  tasks.ItemCaptured,
 			},
 		)
 	})
