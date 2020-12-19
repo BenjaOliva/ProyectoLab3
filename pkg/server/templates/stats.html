@@ -1,4 +1,4 @@
-{{ define "items.html" }}
+{{ define "stats.html" }}
 
 <html lang="en">
 
@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Productos | Usuario: {{ .title }}</title>
+    <title>Estadisticas | Usuario: {{ .title }}</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
@@ -194,9 +194,7 @@
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Mis Productos</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Descargar</a>
+                    <h1 class="h3 mb-0 text-gray-800">Datos Almacenados</h1>
                 </div>
                 <hr>
                 <!-- Content Row -->
@@ -204,42 +202,23 @@
 
                     <div id="Items"></div>
 
-                    <script>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Registros guardado por el usuario</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ .Contador }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                        var cadena = {{ .Productos }}
-
-                            cadena = cadena["ItemsObtenidos"]
-
-                        if(cadena.length > 0){
-                            for(let i = 0; i < cadena.length; i++){
-                                console.log(cadena[i])
-
-                                let div = document.getElementById("Items");
-                                div.innerHTML += "<div class='card text-white bg-dark flex-row flex-wrap '>"
-                                    +  "<div class='card-header border-0 bg-dark '><br>"
-                                    +  "    <img src="+cadena[i].PrimeraImagen+" width='200px' />"
-                                    +  "</div>"
-                                    +  "<div class='card-block px-5'>"
-                                    +  "<br>"
-                                    +  "<h4 class='card-title'>"+cadena[i].Titulo+"</h4><hr style='height:2px;border-width:0;color:gray;background-color:gray'>"
-                                    +  "<p class='card-text'>Precio: $"+cadena[i].Precio+"</p>"
-                                    +  "<p class='card-text'>Cantidad: "+cadena[i].Cantidad+"</p>"
-                                    +  "<p class='card-text'>Condicion: "+cadena[i].Condicion+"</p>"
-                                    +  "<a href='http://localhost:8080/guardar?item="+ i +"' class='btn btn-success'>Guardar</a>"
-                                    +  "</div>"
-                                    +  "<div class='w-100'><br></div>"
-                                    +  "<div class='card-footer w-100 bg-dark'>"
-                                    +  "Fecha de Publicacion: "+ cadena[i].FechaDeCreacion +" "
-                                    +  "</div>"
-                                    +  "</div><br>";
-
-
-                            }
-                        }else{
-                            console.log("No hay items!")
-                        }
-
-                    </script>
                 </div>
 
 
