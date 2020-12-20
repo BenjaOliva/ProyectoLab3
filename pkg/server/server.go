@@ -120,8 +120,10 @@ func RunAPI() {
 			"stats.html",
 			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
 			gin.H{
-				"title":    tasks.UserDatasaved.User_Nickname,
-				"Contador": tasks.CantidadRegistros,
+				"title":         tasks.UserDatasaved.User_Nickname,
+				"Contador":      tasks.CantidadRegistros,
+				"contadorUsers": tasks.CantidadUsers,
+				"NewProducts":   tasks.NProducts,
 			},
 		)
 	})
