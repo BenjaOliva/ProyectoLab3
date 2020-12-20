@@ -20,10 +20,111 @@
 
         <!-- Custom styles for this template-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/css/sb-admin-2.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <style>
+
+            .modal-confirm {
+                color: #434e65;
+                width: 525px;
+            }
+            .modal-confirm .modal-content {
+                padding: 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                border: none;
+            }
+            .modal-confirm .modal-header {
+                background: #47c9a2;
+                border-bottom: none;
+                position: relative;
+                text-align: center;
+                margin: -20px -20px 0;
+                border-radius: 5px 5px 0 0;
+                padding: 35px;
+            }
+            .modal-confirm h4 {
+                text-align: center;
+                font-size: 36px;
+                margin: 10px 0;
+            }
+            .modal-confirm .form-control, .modal-confirm .btn {
+                min-height: 40px;
+                border-radius: 3px;
+            }
+            .modal-confirm .close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                color: #fff;
+                text-shadow: none;
+                opacity: 0.5;
+            }
+            .modal-confirm .close:hover {
+                opacity: 0.8;
+            }
+            .modal-confirm .icon-box {
+                color: #fff;
+                width: 95px;
+                height: 95px;
+                display: inline-block;
+                border-radius: 50%;
+                z-index: 9;
+                border: 5px solid #fff;
+                padding: 15px;
+                text-align: center;
+            }
+            .modal-confirm .icon-box i {
+                font-size: 64px;
+                margin: -4px 0 0 -4px;
+            }
+            .modal-confirm.modal-dialog {
+                margin-top: 80px;
+            }
+            .modal-confirm .btn, .modal-confirm .btn:active {
+                color: #fff;
+                border-radius: 4px;
+                background: #eeb711 !important;
+                text-decoration: none;
+                transition: all 0.4s;
+                line-height: normal;
+                border-radius: 30px;
+                margin-top: 10px;
+                padding: 6px 20px;
+                border: none;
+            }
+            .modal-confirm .btn:hover, .modal-confirm .btn:focus {
+                background: #eda645 !important;
+                outline: none;
+            }
+            .modal-confirm .btn span {
+                margin: 1px 3px 0;
+                float: left;
+            }
+            .modal-confirm .btn i {
+                margin-left: 1px;
+                font-size: 20px;
+                float: right;
+            }
+            .trigger-btn {
+                display: inline-block;
+                margin: 100px auto;
+            }
+        </style>
     </head>
 
     <body id="page-top">
+
+    <script>
+
+        var user = {{ .title }}
+
+        if( user === ""){
+            window.location.replace("http://localhost:8080/ingresar")
+        }
+
+    </script>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -32,7 +133,7 @@
         <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8080/auth/code">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -73,7 +174,7 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Productos</span></a>
@@ -209,116 +310,234 @@
                     <hr>
                     <!-- Content Row -->
                     <div class="row">
-                        <style>
-                            body {
-                                margin:0px;
-                                height:100vh;
-                                background:#333;
-                            }
-                            .center {
-                                height:100%;
-                                display:flex;
-                                align-items:center;
-                                justify-content:center;
-                            }
-                            .form-input {
-                                width:250px;
-                                padding:20px;
-                                background:#fff;
-                                border:2px dashed #555;
-                            }
-                            .form-input input {
-                                display:none;
-                            }
-                            .form-input label {
-                                display:block;
-                                width:100%;
-                                height:50px;
-                                line-height:50px;
-                                text-align:center;
-                                background:#333;
-                                color:#fff;
-                                font-size:15px;
-                                font-family:"Open Sans",sans-serif;
-                                text-transform:Uppercase;
-                                font-weight:600;
-                                border-radius:10px;
-                                cursor:pointer;
-                            }
-
-                            .form-input img {
-                                width:100%;
-                                display:none;
-                                margin-top:10px;
-                            }
-                        </style>
-                        <div id="Items">
-
-                            <div class='card text-white bg-dark flex-row flex-wrap '>
-                                <div class='card-header border-0 bg-dark '>
-                                    <div class="center">
-                                        <div class="form-input">
-                                            <label for="file-ip-1">Cargar Imagen</label>
-                                            <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
-                                            <div class="preview">
-                                                <img id="file-ip-1-preview">
+                        <div id="Items" style="width: 100%;">
+                            <form id="anph" class="contact-form">
+                                <div class='card  text-white bg-dark ' style="width: 100%;">
+                                    <div class='card-block px-5'>
+                                        <br>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon8">Imagen</span>
+                                                <span class="input-group-text" id="basic-addon7">URL</span>
                                             </div>
+                                            <input id="url" name="url" type="url" class="form-control" placeholder="Introduzca una URL de imagen valida o deje en blanco para usar una por defecto" aria-describedby="basic-addon1" >
                                         </div>
-                                    </div>
-                                </div>
-                                <div class='card-block px-5'>
-                                    <br>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon">Titulo</span>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon">Titulo</span>
+                                            </div>
+                                            <input name="title" type="text" class="form-control" placeholder="Titulo de la Publicacion..." id="title">
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Titulo de la Publicacion..." aria-label="Username" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">Precio </span>
-                                            <span class="input-group-text" id="basic-addon2">$ </span>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Precio </span>
+                                                <span class="input-group-text" id="basic-addon2">$ </span>
+                                            </div>
+                                            <input type="number" name="price" class="form-control" placeholder="Precio del item" id="price" value="">
                                         </div>
-                                        <input type="number" class="form-control" placeholder="Precio de Producto..." aria-label="Username" aria-describedby="basic-addon1" value="0.00">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon3">Cantidad</span>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Cantidad</span>
+                                            </div>
+                                            <input type="number" name="quantity" class="form-control" aria-describedby="basic-addon1" id="quantity" value="1">
                                         </div>
-                                        <input type="number" class="form-control" aria-label="Username" aria-describedby="basic-addon1" value="1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon4">Condicion</span>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon4">Condicion</span>
+                                            </div>
+                                            <select class="custom-select" id="condition" name="condition">
+                                                <option selected disabled>Estado...</option>
+                                                <option value="new">Nuevo</option>
+                                                <option value="used">Usado</option>
+                                            </select>
                                         </div>
-                                        <select class="custom-select" id="inputGroupSelect01">
-                                            <option selected disabled>Estado...</option>
-                                            <option value="new">Nuevo</option>
-                                            <option value="used-new">Usado - Como Nuevo</option>
-                                            <option value="used">Usado - En buen Estado</option>
-                                        </select>
-                                    </div>
-                                    <a href='#' class='btn btn-success'>Publicar</a>
-                                </div>
-                                <div class='w-100'><br></div>
-                                <div class='card-footer w-100 bg-dark'>
-                                    <b>Todos los campos son obligatorios para publicar su producto</b>
-                                </div>
-                            </div><br>"
 
-
+                                        <div align="center">
+                                            <button class="btn btn-success contact-form__button" type="submit">Publicar Producto</button>                                        </div>
+                                    </div>
+                            </form>
+                            <div class='w-100'><br></div>
+                            <div class='card-footer w-100 bg-dark'>
+                                <b>Todos los campos son obligatorios para publicar su producto</b>
+                            </div>
                         </div>
-                        <script>
-                            function showPreview(event){
-                                if(event.target.files.length > 0){
-                                    var src = URL.createObjectURL(event.target.files[0]);
-                                    var preview = document.getElementById("file-ip-1-preview");
-                                    preview.src = src;
-                                    preview.style.display = "block";
+
+                        <div id="myModal" class="modal fade" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-confirm">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <div class="icon-box">
+                                            <i class="material-icons"></i>
+                                        </div>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <h4>Articulo Publicado!</h4>
+                                        <p>El Articulo se publico correctamente en su cuenta.</p>
+                                        <a href="./items" class="btn btn-success" ><span>Ir a Publicaciones</span> <i class="material-icons"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+
+                    <script>
+                        /**
+                         * Checks that an element has a non-empty `name` and `value` property.
+                         * @param  {Element} element  the element to check
+                         * @return {Bool}             true if the element is an input, false if not
+                         */
+                        const isValidElement = element => {
+                            return element.name && element.value;
+                        };
+
+                        /**
+                         * Checks if an element’s value can be saved (e.g. not an unselected checkbox).
+                         * @param  {Element} element  the element to check
+                         * @return {Boolean}          true if the value should be added, false if not
+                         */
+                        const isValidValue = element => {
+                            return (!['checkbox', 'radio'].includes(element.type) || element.checked);
+                        };
+
+                        /**
+                         * Checks if an input is a checkbox, because checkboxes allow multiple values.
+                         * @param  {Element} element  the element to check
+                         * @return {Boolean}          true if the element is a checkbox, false if not
+                         */
+                        const isCheckbox = element => element.type === 'checkbox';
+
+                        /**
+                         * Checks if an input is a `select` with the `multiple` attribute.
+                         * @param  {Element} element  the element to check
+                         * @return {Boolean}          true if the element is a multiselect, false if not
+                         */
+                        const isMultiSelect = element => element.options && element.multiple;
+
+                        /**
+                         * Retrieves the selected options from a multi-select as an array.
+                         * @param  {HTMLOptionsCollection} options  the options for the select
+                         * @return {Array}                          an array of selected option values
+                         */
+                        const getSelectValues = options => [].reduce.call(options, (values, option) => {
+                            return option.selected ? values.concat(option.value) : values;
+                        }, []);
+
+                        /**
+                         * A more verbose implementation of `formToJSON()` to explain how it works.
+                         *
+                         * NOTE: This function is unused, and is only here for the purpose of explaining how
+                         * reducing form elements works.
+                         *
+                         * @param  {HTMLFormControlsCollection} elements  the form elements
+                         * @return {Object}                               form data as an object literal
+                         */
+                        const formToJSON_deconstructed = elements => {
+
+                            // This is the function that is called on each element of the array.
+                            const reducerFunction = (data, element) => {
+
+                                // Add the current field to the object.
+                                data[element.name] = element.value;
+
+                                // For the demo only: show each step in the reducer’s progress.
+                                console.log(JSON.stringify(data));
+
+                                return data;
+                            };
+
+                            // This is used as the initial value of `data` in `reducerFunction()`.
+                            const reducerInitialValue = {};
+
+                            // To help visualize what happens, log the inital value, which we know is `{}`.
+                            console.log('Initial `data` value:', JSON.stringify(reducerInitialValue));
+
+                            // Now we reduce by `call`-ing `Array.prototype.reduce()` on `elements`.
+                            const formData = [].reduce.call(elements, reducerFunction, reducerInitialValue);
+
+                            // The result is then returned for use elsewhere.
+                            return formData;
+                        };
+
+                        /**
+                         * Retrieves input data from a form and returns it as a JSON object.
+                         * @param  {HTMLFormControlsCollection} elements  the form elements
+                         * @return {Object}                               form data as an object literal
+                         */
+                        const formToJSON = elements => [].reduce.call(elements, (data, element) => {
+
+                            // Make sure the element has the required properties and should be added.
+                            if (isValidElement(element) && isValidValue(element)) {
+
+                                /*
+                                 * Some fields allow for more than one value, so we need to check if this
+                                 * is one of those fields and, if so, store the values as an array.
+                                 */
+                                if (isCheckbox(element)) {
+                                    data[element.name] = (data[element.name] || []).concat(element.value);
+                                } else if (isMultiSelect(element)) {
+                                    data[element.name] = getSelectValues(element);
+                                } else {
+                                    data[element.name] = element.value;
                                 }
                             }
-                        </script>
-                    </div>
+
+                            return data;
+                        }, {});
+
+                        /**
+                         * A handler function to prevent default submission and run our custom script.
+                         * @param  {Event} event  the submit event triggered by the user
+                         * @return {void}
+                         */
+                        const handleFormSubmit = event => {
+
+                            // Stop the form from submitting since we’re handling that with AJAX.
+                            event.preventDefault();
+
+                            // Call our function to get the form data.
+                            const data = formToJSON(form.elements);
+                            dataReady = JSON.stringify(data)
+                            console.log(dataReady)
+
+                            sendData();
+
+                            form.reset()
+
+                            $("#myModal").modal("show");
+                            // Demo only: print the form data onscreen as a formatted JSON object.
+                            const dataContainer = document.getElementsByClassName('results__display')[0];
+
+                            // Use `JSON.stringify()` to make the output valid, human-readable JSON.
+                            dataContainer.textContent = JSON.stringify(data, null, "  ");
+
+                            // ...this is where we’d actually do something with the form data...
+                        };
+
+                        /*
+                         * This is where things actually get started. We find the form element using
+                         * its class name, then attach the `handleFormSubmit()` function to the
+                         * `submit` event.
+                         */
+                        var dataReady
+                        const form = document.getElementsByClassName('contact-form')[0];
+                        form.addEventListener('submit', handleFormSubmit);
+
+                        function sendData() {
+                            $.ajax({
+                                url: './submit',
+                                type: 'POST',
+                                contentType: false,
+                                data: dataReady,
+                                dataType: 'json'
+                            });
+                        }
+
+                    </script>
+
+
+                </div>
 
 
                 </div>

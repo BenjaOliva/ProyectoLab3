@@ -53,9 +53,11 @@ type Response struct {
 }
 
 type MyItem struct {
-	Title    string `json:"title"`
-	Quantity string `json:"quantity"`
-	Price    string `json:"price"`
+	Title      string `json:"title"`
+	Quantity   string `json:"quantity"`
+	Price      string `json:"price"`
+	PictureUrl string `json:"url"`
+	Condition  string `json:"condition"`
 }
 
 var ResponseNewItem MyItem
@@ -69,13 +71,17 @@ func NewProduct(c *gin.Context) {
 		return
 	}
 
-	itemToPost := string(bodyFront)
-
-	fmt.Println(itemToPost)
+	//itemToPost := string(bodyFront)
+	//fmt.Println("Item del Form: ", itemToPost)
 
 	json.Unmarshal(bodyFront, &ResponseNewItem)
 
-	fmt.Printf("%+v\n", ResponseNewItem)
+	//En caso de no haber cargado una url en el formulario, se setea una url de imagen por defecto
+	if ResponseNewItem.PictureUrl == "" {
+		ResponseNewItem.PictureUrl = "http://mla-s2-p.mlstatic.com/968521-MLA20805195516_072016-O.jpg"
+	}
+
+	fmt.Println("Item a Publicar: ", ResponseNewItem)
 
 	atributes := []Atribute{
 		{
@@ -90,7 +96,7 @@ func NewProduct(c *gin.Context) {
 
 	pictures := []Picture{
 		{
-			Source: "http://mla-s2-p.mlstatic.com/968521-MLA20805195516_072016-O.jpg",
+			Source: ResponseNewItem.PictureUrl,
 		},
 	}
 
@@ -106,7 +112,7 @@ func NewProduct(c *gin.Context) {
 	}
 
 	description := Description{
-		Plain_text: "Descripción con Texto Plano \n",
+		Plain_text: "Item Publicado desde NetSpace\n",
 	}
 
 	//convertimos los parametros del body que enviamos desde el front a float y entero respectivamente porque vienen como strings
@@ -131,7 +137,9 @@ func NewProduct(c *gin.Context) {
 
 	jsonNewItem, _ := json.Marshal(newItem)
 
-	//fmt.Println(string(jsonNewItem))
+	//fmt.Println("JSONnewItem: ",string(jsonNewItem))
+
+	//c.JSON(200, ResponseNewItem)
 
 	responsePostNewItem, err := http.Post("https://api.mercadolibre.com/items?access_token="+TokenR.Access_token, "application/json; application/x-www-form-urlencoded", bytes.NewBuffer(jsonNewItem))
 
@@ -150,9 +158,10 @@ func NewProduct(c *gin.Context) {
 	}
 
 	bodyString := string(response)
-	fmt.Println(bodyString)
+	fmt.Println("Respuesta MELI: ", bodyString)
 
 	json.Unmarshal(response, &ResponseNewItem)
 
 	//c.JSON(200, ResponseNewItem)
+
 }

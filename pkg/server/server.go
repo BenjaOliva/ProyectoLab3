@@ -82,7 +82,7 @@ func RunAPI() {
 		)
 	})
 
-	r.GET("/crear", tasks.NewProduct, func(c *gin.Context) {
+	r.GET("/crear", func(c *gin.Context) {
 
 		// Call the HTML method of the Context to render a template
 		c.HTML(
@@ -96,6 +96,8 @@ func RunAPI() {
 			},
 		)
 	})
+
+	r.POST("/submit", tasks.NewProduct)
 
 	//Corremos el server en el puerto deseado
 	r.Run(":8080")
