@@ -115,7 +115,7 @@ type SoldItemMeli struct {
 
 //========================= STRUCT PARA MOSTRAR LOS ARRAYS DE STRUCTS PRINCIPALES ========================
 
-type NuestrosItems struct {
+type OurItems struct {
 	ItemsObtenidos       []Item
 	Unanswered_Questions []Unanswered_Question
 	Sales_Orders         []Sale_Order
@@ -125,10 +125,10 @@ type NuestrosItems struct {
 
 var Questions []Unanswered_Question
 
-func GetAll(c *gin.Context) {
+// Creamos variable del tipo "Nuestros itemas" para almacenar los arrays de la informacion a mostrar en navegador, en formato JSON
+var NuestrosItems OurItems
 
-	// Creamos variable del tipo "Nuestros itemas" para almacenar los arrays de la informacion a mostrar en navegador, en formato JSON
-	var NuestrosItems NuestrosItems
+func GetAll(c *gin.Context) {
 
 	//Consulta para obtener todos los ITEMS de un usuario, pasamos 2 parametros, id de usuario generado por la funcion GetToken
 	//y el parametro access token para validar y obtener los datos que solicitamos
@@ -254,6 +254,6 @@ func GetAll(c *gin.Context) {
 
 	Questions = NuestrosItems.Unanswered_Questions
 
-	//c.JSON(200, NuestrosItems)
+	//c.JSON(200, OurItems)
 
 }

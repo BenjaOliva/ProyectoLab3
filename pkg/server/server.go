@@ -1,10 +1,10 @@
 package server
 
 import (
+	"net/http"
+
 	"github.com/ProyectoLab3-master/pkg/tasks"
 	"github.com/gin-gonic/gin"
-	_ "github.com/go-sql-driver/mysql"
-	"net/http"
 )
 
 func RunAPI() {
@@ -17,17 +17,20 @@ func RunAPI() {
 
 	//EndPoints
 	// - GetToken
-	r.GET("/auth/code", tasks.GetToken, tasks.GetStats, func(c *gin.Context) {
+	r.GET("/auth/code", tasks.GetToken, tasks.GetItemsOnly, tasks.GetAll, tasks.GetStats, func(c *gin.Context) {
 		// Renderizamos el HTML cargado previamente
 		c.HTML(
 			// seteamos status HTTP en 200 (OK)
 			http.StatusOK,
 			// Usamos el template cargado
 			"index.html",
-			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
+			// Pasamos los datos que queramos al archivo index, por ejemplo "nickname" de Usuario en el titulo de pagina
 			gin.H{
-				"title":      tasks.UserDatasaved.User_Nickname,
-				"userName1":  tasks.UserName,
+				"title":            tasks.UserDatasaved.User_Nickname,
+				"itemCounter":      len(tasks.OnlyItems.ItemsObtenidos),
+				"PendingQuestions": len(tasks.NuestrosItems.Unanswered_Questions),
+				"soldItemsCounter": len(tasks.NuestrosItems.Sales_Orders),
+        "userName1":  tasks.UserName,
 				"userCount1": tasks.UserCount,
 				"userName2":  tasks.UserName2,
 				"userCount2": tasks.UserCount2,
@@ -84,7 +87,7 @@ func RunAPI() {
 		)
 	})
 
-	r.GET("/crear", tasks.NewProduct, func(c *gin.Context) {
+	r.GET("/crear", func(c *gin.Context) {
 
 		// Call the HTML method of the Context to render a template
 		c.HTML(
@@ -94,26 +97,12 @@ func RunAPI() {
 			"newProduct.html",
 			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
 			gin.H{
-				"title": tasks.TokenR.User_id,
-			},
-		)
-	})
-
-	r.GET("/guardar", tasks.SaveItem, func(c *gin.Context) {
-		// Call the HTML method of the Context to render a template
-		c.HTML(
-			// Set the HTTP status to 200 (OK)
-			http.StatusOK,
-			// Use the index.html template
-			"saveOnDB.html",
-			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
-			gin.H{
 				"title": tasks.UserDatasaved.User_Nickname,
-				"Item":  tasks.ItemCaptured,
 			},
 		)
 	})
 
+	r.POST("/submit", tasks.NewProduct)
 	r.GET("/stats", tasks.GetStats, func(c *gin.Context) {
 
 		// Call the HTML method of the Context to render a template
