@@ -17,7 +17,7 @@ func RunAPI() {
 
 	//EndPoints
 	// - GetToken
-	r.GET("/auth/code", tasks.GetToken, func(c *gin.Context) {
+	r.GET("/auth/code", tasks.GetToken, tasks.GetStats, func(c *gin.Context) {
 		// Renderizamos el HTML cargado previamente
 		c.HTML(
 			// seteamos status HTTP en 200 (OK)
@@ -26,7 +26,11 @@ func RunAPI() {
 			"index.html",
 			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
 			gin.H{
-				"title": tasks.UserDatasaved.User_Nickname,
+				"title":      tasks.UserDatasaved.User_Nickname,
+				"userName1":  tasks.UserName,
+				"userCount1": tasks.UserCount,
+				"userName2":  tasks.UserName2,
+				"userCount2": tasks.UserCount2,
 			},
 		)
 	})
