@@ -1,9 +1,10 @@
 package server
 
 import (
+	"net/http"
+
 	"github.com/ProyectoLab3-master/pkg/tasks"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func RunAPI() {
@@ -98,6 +99,23 @@ func RunAPI() {
 	})
 
 	r.POST("/submit", tasks.NewProduct)
+	r.GET("/stats", tasks.GetStats, func(c *gin.Context) {
+
+		// Call the HTML method of the Context to render a template
+		c.HTML(
+			// Set the HTTP status to 200 (OK)
+			http.StatusOK,
+			// Use the index.html template
+			"stats.html",
+			// Pasamos los datos que queramos al archivo index, por ejemplo ID de Usuario en el titulo de pagina
+			gin.H{
+				"title":         tasks.UserDatasaved.User_Nickname,
+				"Contador":      tasks.CantidadRegistros,
+				"contadorUsers": tasks.CantidadUsers,
+				"NewProducts":   tasks.NProducts,
+			},
+		)
+	})
 
 	//Corremos el server en el puerto deseado
 	r.Run(":8080")
