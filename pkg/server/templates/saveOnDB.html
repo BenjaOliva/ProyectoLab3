@@ -1,4 +1,4 @@
-{{ define "items.html" }}
+{{ define "saveOnDB.html" }}
 
 <html lang="en">
 
@@ -22,15 +22,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/css/sb-admin-2.css" rel="stylesheet">
 
 </head>
-<script>
 
-    var user = {{ .title }}
-
-    if( user === ""){
-        window.location.replace("http://localhost:8080/ingresar")
-    }
-
-</script>
 <body id="page-top">
 
 <!-- Page Wrapper -->
@@ -40,7 +32,7 @@
     <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8080/auth/code">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -82,19 +74,10 @@
 
         <!-- Nav Item - Tables -->
         <li class="nav-item active">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link" href="http://localhost:8080/items">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Productos</span></a>
-            </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="http://localhost:8080/items">Publicaciones</a>
-                    <a class="collapse-item" href="http://localhost:8080/crear"> Crear Publicacion</a>
-
-                </div>
-            </div>
         </li>
-
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -211,56 +194,36 @@
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Mis Productos</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Descargar</a>
+                    <h1 class="h3 mb-0 text-gray-800">Producto Guardado!</h1>
                 </div>
                 <hr>
                 <!-- Content Row -->
                 <div class="row">
 
-                    <div id="Items"></div>
-
                     <script>
-
-                        var cadena = {{ .Productos }}
-
-                            cadena = cadena["ItemsObtenidos"]
-
-                        if(cadena.length > 0){
-                            for(let i = 0; i < cadena.length; i++){
-                                console.log(cadena[i])
-
-                                let div = document.getElementById("Items");
-                                div.innerHTML += "<div class='card text-white bg-dark flex-row flex-wrap '>"
-                                    +  "<div class='card-header border-0 bg-dark '><br>"
-                                    +  "    <img src="+cadena[i].PrimeraImagen+" width='200px' />"
-                                    +  "</div>"
-                                    +  "<div class='card-block px-5'>"
-                                    +  "<br>"
-                                    +  "<h4 class='card-title'>"+cadena[i].Titulo+"</h4><hr style='height:2px;border-width:0;color:gray;background-color:gray'>"
-                                    +  "<p class='card-text'>Precio: $"+cadena[i].Precio+"</p>"
-                                    +  "<p class='card-text'>Cantidad: "+cadena[i].Cantidad+"</p>"
-                                    +  "<p class='card-text'>Condicion: "+cadena[i].Condicion+"</p>"
-                                    +  "<a href='http://localhost:8080/guardar?item="+ i +"' class='btn btn-success'>Guardar</a>"
-                                    +  "</div>"
-                                    +  "<div class='w-100'><br></div>"
-                                    +  "<div class='card-footer w-100 bg-dark'>"
-                                    +  "Fecha de Publicacion: "+ cadena[i].FechaDeCreacion +" "
-                                    +  "</div>"
-                                    +  "</div><br>";
-                            }
-                        }else{
-                            console.log("No hay items!")
-                        }
-
+                        var cadena = {{ .Item }}
                     </script>
+
+                    <div id="Items">
+
+                        <div class="card text-white bg-success mb-3" >
+                            <div class="card-header bg-success">Item Guardado!</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Los Datos de la publicacion se guardaron exitosamente!</h5>
+                                <p class="card-text" id="text-confirmation"></p>
+                                <a class="btn btn-secondary" href="http://localhost:8080/items" role="button">Volver a Productos</a>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
+                <script>
+                    document.getElementById("text-confirmation").innerHTML = "Se guardo la informacion para el articulo: " + cadena.Titulo;
+                </script>
 
             </div>
             <!-- /.container-fluid -->
-
         </div>
         <!-- End of Main Content -->
 
