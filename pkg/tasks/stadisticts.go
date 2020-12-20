@@ -22,7 +22,7 @@ func GetStats(c *gin.Context) {
 	newProducts()
 	porcentajeDB(name)
 	porcentajeDB2(name)
-	porcentaje()
+	//porcentaje()
 }
 func obtener(name string) (e error) {
 	db, err := obtenerBaseDeDatos()
