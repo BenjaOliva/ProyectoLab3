@@ -17,7 +17,7 @@ func RunAPI() {
 
 	//EndPoints
 	// - GetToken
-	r.GET("/auth/code", tasks.GetToken, tasks.GetItemsOnly, tasks.GetAll, func(c *gin.Context) {
+	r.GET("/auth/code", tasks.GetToken, tasks.GetItemsOnly, tasks.GetAll, tasks.GetStats, func(c *gin.Context) {
 		// Renderizamos el HTML cargado previamente
 		c.HTML(
 			// seteamos status HTTP en 200 (OK)
@@ -30,6 +30,10 @@ func RunAPI() {
 				"itemCounter":      len(tasks.OnlyItems.ItemsObtenidos),
 				"PendingQuestions": len(tasks.NuestrosItems.Unanswered_Questions),
 				"soldItemsCounter": len(tasks.NuestrosItems.Sales_Orders),
+        "userName1":  tasks.UserName,
+				"userCount1": tasks.UserCount,
+				"userName2":  tasks.UserName2,
+				"userCount2": tasks.UserCount2,
 			},
 		)
 	})
