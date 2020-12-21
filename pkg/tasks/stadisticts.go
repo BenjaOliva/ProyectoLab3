@@ -27,7 +27,7 @@ func GetStats(c *gin.Context) {
 func obtener(name string) (e error) {
 	db, err := obtenerBaseDeDatos()
 	if err != nil {
-		fmt.Println("Error obteniendo base de datos: %v", err)
+		fmt.Println("Error obteniendo base de datos obtener: %v", err)
 		return
 	}
 	err = db.QueryRow("SELECT count(*) FROM `items` WHERE `Usuario` = ? ", name).Scan(&CantidadRegistros)
@@ -41,7 +41,7 @@ func obtener(name string) (e error) {
 func obtenerUsers() {
 	db, err := obtenerBaseDeDatos()
 	if err != nil {
-		fmt.Println("Error obteniendo base de datos: %v", err)
+		fmt.Println("Error obteniendo base de datos obtenerUsers: %v", err)
 		return
 	}
 	err = db.QueryRow("SELECT count(Usuario) FROM items").Scan(&CantidadUsers)
@@ -56,7 +56,7 @@ func obtenerUsers() {
 func newProducts() {
 	db, err := obtenerBaseDeDatos()
 	if err != nil {
-		fmt.Println("Error obteniendo base de datos: %v", err)
+		fmt.Println("Error obteniendo base de datos new products: %v", err)
 		return
 	}
 	var results *sql.Rows
@@ -78,7 +78,7 @@ func newProducts() {
 func porcentajeDB(name string) {
 	db, err := obtenerBaseDeDatos()
 	if err != nil {
-		fmt.Println("Error obteniendo base de datos: %v", err)
+		fmt.Println("Error obteniendo base de datos porcentajeDB: %v", err)
 		return
 	}
 	err = db.QueryRow("SELECT `Usuario`,COUNT(`Titulo`) FROM `items` WHERE `Usuario` = ? ", name).Scan(&UserName, &UserCount)
@@ -94,7 +94,7 @@ func porcentajeDB(name string) {
 func porcentajeDB2(name string) {
 	db, err := obtenerBaseDeDatos()
 	if err != nil {
-		fmt.Println("Error obteniendo base de datos: %v", err)
+		fmt.Println("Error obteniendo base de datos porcentajeDB2: %v", err)
 		return
 	}
 	err = db.QueryRow("SELECT `Usuario`, COUNT(`Titulo`) FROM `items` WHERE `Usuario` != ?", name).Scan(&UserName2, &UserCount2)
@@ -109,7 +109,7 @@ func porcentajeDB2(name string) {
 
 func porcentaje() {
 	var rta1 int
-	rta1 = (UserCount + UserCount2) / UserCount
+	//rta1 = (UserCount + UserCount2) / UserCount
 	var rta2 int
 	rta2 = (UserCount2 + UserCount) / UserCount2
 	UserCount = rta1
