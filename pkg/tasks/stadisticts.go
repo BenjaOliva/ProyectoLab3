@@ -78,16 +78,19 @@ func newProducts() {
 
 func porcentajeDB(name string) {
 	db, err := obtenerBaseDeDatos()
+
+	fmt.Println(name)
+
 	if err != nil {
 		fmt.Println("Error obteniendo base de datos porcentajeDB: %v", err)
 		return
 	}
 	err = db.QueryRow("SELECT `Usuario`,COUNT(`Titulo`) FROM `items` WHERE `Usuario` = ? ", name).Scan(&UserName, &UserCount)
 	if err != nil {
-		fmt.Println("Error al calcular el porcentaje de usuarios: %v", err)
+		fmt.Println("Error al calcular el porcentaje de usuarios POR NAME: %v", err)
 		return
 	}
-	fmt.Println(UserCount, UserName)
+	fmt.Println("User1: ", UserCount, UserName)
 	return
 
 }
@@ -103,7 +106,7 @@ func porcentajeDB2(name string) {
 		fmt.Println("Error al calcular el porcentaje de usuarios: %v", err)
 		return
 	}
-	fmt.Println(UserCount2, UserName2)
+	fmt.Println("User2: ", UserCount2, UserName2)
 	return
 
 }
