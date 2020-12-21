@@ -60,6 +60,7 @@ func GetItemsOnly(c *gin.Context) {
 		var itemTemp Item
 
 		//Seteamos los datos de la variable del tipo MeLi en la propia
+		itemTemp.Id = MeliItem.Id
 		itemTemp.Titulo = MeliItem.Title
 		itemTemp.Precio = MeliItem.Price
 		itemTemp.PrimeraImagen = MeliItem.Pictures[0].Url
