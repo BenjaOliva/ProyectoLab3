@@ -370,7 +370,7 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h5 class="m-0 font-weight-bold text-primary">Uso de DB</h5>
-                                <h6 class="m-0 font-weight-bold text-primary">Explicacion</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Uso de la DB por cada usuario</h6>
                             </div>
                             <div class="card-body">
                                 <h4 class="small font-weight-bold">{{ .userName1 }} <span
@@ -382,8 +382,8 @@
                                 <h4 class="small font-weight-bold"> {{ .userName2 }} <span
                                             class="float-right">{{ .userCount2 }}</span></h4>
                                 <div class="progress mb-4">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{  .userCount2  }}%"
+                                         aria-valuenow="{{  .userCount2  }}" aria-valuemin="0" aria-valuemax="10"></div>
                                 </div>
                                 
                             </div>
