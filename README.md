@@ -5,8 +5,8 @@ En este proyecto usarmos los datos de la aplicacion NetSpace a la cual le daremo
 ## Integrantes
 
 Oliva Benjamin,
-Gali Asmuzi,
-Ery Tello.
+Asmuzi Gali,
+Tello Eric.
 
 ### Estructura:
 * La estructura de la plataforma comienza con el ingreso de usuario, que una vez logueado, pasara a un
