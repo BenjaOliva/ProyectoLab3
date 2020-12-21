@@ -1,10 +1,9 @@
 package server
 
 import (
-	"net/http"
-
 	"github.com/ProyectoLab3-master/pkg/tasks"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func RunAPI() {

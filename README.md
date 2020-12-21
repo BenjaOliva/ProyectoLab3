@@ -17,6 +17,22 @@ con el boton "Salir".
 
 * ![Alt text](pkg/assets/Plataforma%20NetSpace.png)
 
+
+### Heramientas Utilizadas
+
+* Se utilizaron servicios CDN para usar hojas de estilos y archivos JS de Boostrap 4
+* Se utilizo el template `SB-Admin-2` de Boostrap 4 para el diseño UI, modals, cards, botones, etc.(URL al template: https://startbootstrap.com/theme/sb-admin-2)
+* Se utilizo XAMPP para servir la DB en `MySQL`
+* `GoLand` fue el IDE utilizado para ambiente de trabajdo debido a sus funciones y facilidades con `GitHub`.
+* Se uso GitHub para seguimiento del proyecto, trabajo paralelo, y mantener a los developers al tanto de este proyecto.
+* Se dio uso de la api de MercadoLibre y sus herramientas para trabajar junto con Go y dar funcionamiento a la plataforma.
+  (URL a pagina de la api `MELI`: https://developers.mercadolibre.com.ar/es_ar/api-docs-es)
+  
+### Lenguajes Utilizados durante el Proyecto
+
+* Para el desarrollo del proyecto se necesito conocimientos en:
+ *HTML, CSS, JS, Go, SQL, jQuery* 
+
  ### Pasos para Ejecucion e ingreso a la Plataforma:
  
  * **1.** Ejecutar el archivo `main.go` para iniciar el servidor local en el puerto `:8080`, e iniciar el servicio de `Apache` y `MySQL` en XAMPP para usar la base de datos (Aclaracion: Se debe tener creada la Database `netspace` y la tabla `items` dentro de la misma para el correcto funcionamiento, ademas de la estructura misma de la tabla) .
