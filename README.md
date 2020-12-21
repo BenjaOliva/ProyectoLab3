@@ -1,7 +1,6 @@
 # Proyecto Lab 3 - NetSpace
 
-En este proyecto usarmos los datos de la aplicacion NetSpace a la cual le daremos permisos cuando se haga el OAuth.
-
+Este Proyecto se basa en una plataforma dedicada a manejar distintos aspectos de la cuenta de MercadoLibre del usuario logueado. Dando herramientas para: Publicar Productos, Responder Preguntas, Ver ventas realizadas, Ver Productos Publicados, Guardar Informacion de Productos en una DB MySQL.
 ## Integrantes
 
 Oliva Benjamin,
