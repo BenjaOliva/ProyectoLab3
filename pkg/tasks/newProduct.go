@@ -162,6 +162,7 @@ func NewProduct(c *gin.Context) {
 
 	json.Unmarshal(response, &ResponseNewItem)
 
+	ResponseNewItem.PictureUrl = ""
 	//c.JSON(200, ResponseNewItem)
 
 }

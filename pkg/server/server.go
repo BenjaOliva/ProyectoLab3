@@ -30,10 +30,10 @@ func RunAPI() {
 				"itemCounter":      len(tasks.OnlyItems.ItemsObtenidos),
 				"PendingQuestions": len(tasks.NuestrosItems.Unanswered_Questions),
 				"soldItemsCounter": len(tasks.NuestrosItems.Sales_Orders),
-        "userName1":  tasks.UserName,
-				"userCount1": tasks.UserCount,
-				"userName2":  tasks.UserName2,
-				"userCount2": tasks.UserCount2,
+				"userName1":        tasks.UserName,
+				"userCount1":       tasks.UserCount,
+				"userName2":        tasks.UserName2,
+				"userCount2":       tasks.UserCount2,
 			},
 		)
 	})
@@ -103,6 +103,9 @@ func RunAPI() {
 	})
 
 	r.POST("/submit", tasks.NewProduct)
+
+	r.POST("/answer", tasks.AnswerQuestion)
+
 	r.GET("/stats", tasks.GetStats, func(c *gin.Context) {
 
 		// Call the HTML method of the Context to render a template

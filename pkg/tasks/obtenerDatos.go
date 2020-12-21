@@ -28,6 +28,7 @@ type ItemMeli struct {
 
 // --- STRUCT PRINCIPAL A MOSTRAR ---
 type Item struct {
+	Id              string
 	Titulo          string
 	Cantidad        int
 	Precio          float64
@@ -47,6 +48,8 @@ type ItemsIdMeli struct {
 
 // Struct con estructura para almacenar lo que recibimos de MeLi en crudo
 type QuestionMeli struct {
+	Id           int          `json:"id"`
+	Item_Id      string       `json:"item_id"`
 	Date_created string       `json:"date_created"`
 	Text         string       `json:"text"`
 	Status       string       `json:"status"`
@@ -60,6 +63,7 @@ type PreguntasSR struct {
 
 // --- STRUCT PRINCIPAL A MOSTRAR ---
 type Unanswered_Question struct {
+	Id            int
 	Question_date string
 	Title         string
 	Question_text string
@@ -168,6 +172,8 @@ func GetAll(c *gin.Context) {
 		var itemTemp Item
 
 		//Seteamos los datos de la variable del tipo MeLi en la propia
+
+		itemTemp.Id = item.Id
 		itemTemp.Titulo = item.Title
 		itemTemp.Precio = item.Price
 		itemTemp.PrimeraImagen = item.Pictures[0].Url
@@ -208,6 +214,13 @@ func GetAll(c *gin.Context) {
 				continue
 			}
 			//Seteamos los datos de la variable del tipo MeLi en la propia
+			UnansweredQuestiontemp.Id = questions.Questions[i].Id
+
+			for j := 0; j < len(OnlyItems.ItemsObtenidos); j++ {
+				if OnlyItems.ItemsObtenidos[j].Id == questions.Questions[i].Item_Id {
+					UnansweredQuestiontemp.Title = OnlyItems.ItemsObtenidos[j].Titulo
+				}
+			}
 
 			UnansweredQuestiontemp.Title = NuestrosItems.ItemsObtenidos[i].Titulo
 			UnansweredQuestiontemp.Question_date = questions.Questions[i].Date_created
@@ -220,7 +233,6 @@ func GetAll(c *gin.Context) {
 
 	NuestrosItems.Unanswered_Questions = Unanswered_Questions
 
-	fmt.Println()
 	//  Ventas efectuadas
 	resp2, err := http.Get("https://api.mercadolibre.com/orders/search?seller=" + strconv.Itoa(TokenR.User_id) + "&order.status=paid&access_token=" + TokenR.Access_token)
 
